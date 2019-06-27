@@ -46,32 +46,28 @@ header .link {
   text-decoration: underline;
 }
 
-main#nojoke {
+main.nojoke {
   text-align: center;
   margin: 6rem;
   font-size: 4rem;
 }
 
-.hidden {
-  display: none;
-}
-
-main#newjoke {
+main.newjoke {
   margin: 0 4rem;
 }
 
-main#newjoke h2 {
+main.newjoke h2 {
   font-size: 4rem;
   font-style: italic;
   margin-bottom: 2rem;
 }
 
-main#newjoke #text_field {
+main.newjoke #text_field {
   margin: 2rem;
   font-size: 4rem;
 }
 
-#votes {
+.votes {
   margin: 0 4rem;
   margin-top: auto;
   display: flex;
@@ -95,16 +91,20 @@ main#newjoke #text_field {
   background: lightcoral;
 }
 
-#description {
+.description {
   margin: 3rem;
   bottom: 0;
   font-size: 2rem;
   text-align: center;
 }
 
-#description div {
+.description div {
   margin-top: 2rem;
   display: flex;
   font-size: 3rem;
   justify-content: space-around;
+}
+
+.hidden {
+  display: none;
 }
