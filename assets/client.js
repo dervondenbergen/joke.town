@@ -12,23 +12,27 @@ function clear() {
   votes.classList.add("hidden");
   newjoke.classList.add("hidden");
   description.classList.add("hidden");
+
+  currentjoke = null;
 }
 
 window.onkeyup = keyboardVote;
 
 function keyboardVote(keyevent) {
-  switch (keyevent.key) {
-    case "ArrowLeft":
-      socket.emit("vote", { id: currentjoke.id, change: "down" });
-      currentjoke.votes.down++;
-      break;
-    case "ArrowRight":
-      socket.emit("vote", { id: currentjoke.id, change: "up" });
-      currentjoke.votes.up++;
-      break;
+  if (currentjoke) {
+    switch (keyevent.key) {
+      case "ArrowLeft":
+        socket.emit("vote", { id: currentjoke.id, change: "down" });
+        currentjoke.votes.down++;
+        showJoke();
+        break;
+      case "ArrowRight":
+        socket.emit("vote", { id: currentjoke.id, change: "up" });
+        currentjoke.votes.up++;
+        showJoke();
+        break;
+    }
   }
-
-  showJoke();
 }
 
 function showJoke() {

@@ -57,10 +57,10 @@ app.post("/sms", function(req, res) {
 
   console.log(`SMS from ${from} saying: ${body}`);
 
+  // user is not in users object, gets asked for nickname
   if (!users.hasOwnProperty(from)) {
     console.log("no user");
 
-    // user hat noch kein pseudonym, also muss das erst erfragt werden.
     users[from] = null;
 
     updateUsers();
@@ -73,8 +73,10 @@ app.post("/sms", function(req, res) {
     return res.end(twiml.toString());
   }
 
+  // user is already saved
   user = users[from];
 
+  // user has no nickname, so message will be used as nickname
   if (user === null) {
     console.log("new name");
 
@@ -87,8 +89,10 @@ app.post("/sms", function(req, res) {
     return res.end(twiml.toString());
   }
 
+  // message will be converted to joke
   j = { id, from, user, text: body, votes: { up: 0, down: 0 } };
 
+  // send joke into the system -> see sendJoke function
   sendJoke(j);
 
   res.status(200);
@@ -96,11 +100,14 @@ app.post("/sms", function(req, res) {
 });
 
 function sendJoke(joke) {
+  // joke gets added to the jokes "database" file
   jokes.push(joke);
 
   if (timeoutId === null) {
+    // no joke is currently on display, so the new joke will be displayed -> see setResponseTimer function
     setResponseTimer(joke.id);
   } else {
+    // a joke is currently displayed, the id will be added to the queue and writer will be informed, that there are already jokes shown
     jokequeue.push(joke.id);
 
     twilio.messages
@@ -113,9 +120,11 @@ function sendJoke(joke) {
       .then(message => console.log("Delivered: ", message));
   }
 
+  // independed if joke gets shown or added to queue, jokes file will be updated
   updateJokes();
 }
 
+// save data from jokes object to jokes.json, this exists instead of an database, as it is much easier to implement
 function updateJokes() {
   fs.writeFile(
     path.join(__dirname, "data/jokes.json"),
@@ -130,8 +139,11 @@ function updateJokes() {
 
 function setResponseTimer(jokeid) {
   joke = jokes.find(j => j.id === jokeid);
+
+  // joke gets sent to display via websockets
   io.emit("joke", joke);
 
+  // writer will be informed, that joke appears for one minute on screen
   twilio.messages
     .create({
       body:
@@ -141,17 +153,24 @@ function setResponseTimer(jokeid) {
     })
     .then(message => console.log("Delivered: ", message));
 
+  // timeout starts for how long joke should be available
   timeoutId = setTimeout(function() {
+    // after the timeout, the votes will be send to the writer
     sendVotes(jokeid);
+
+    // display gets cleared from old joke
     io.emit("clear");
     if (jokequeue.length) {
+      // if there is a joke in the queue, the function calls itself with the id an removes it from the queue (FIFO)
       setResponseTimer(jokequeue.shift());
     } else {
+      // if the queue is empty, the timeoutid will be set to null
       timeoutId = null;
     }
-  }, 60 * 1000);
+  }, 60 * 1000); // one minute
 }
 
+// sends the votes on a joke to the writer, after it gets removed from the display
 function sendVotes(jokeid) {
   joke = jokes.find(j => j.id === jokeid);
 
@@ -166,6 +185,7 @@ function sendVotes(jokeid) {
     .then(message => console.log("Delivered: ", message));
 }
 
+// takes any string and truncates it with … if it is over 25 chars long
 function truncateString(text) {
   if (text.length > 25) {
     text = text.slice(0, 24) + "…";
@@ -173,6 +193,7 @@ function truncateString(text) {
   return text;
 }
 
+// save data from users object to users.json, this exists instead of an database, as it is much easier to implement
 function updateUsers() {
   fs.writeFile(
     path.join(__dirname, "data/users.json"),
@@ -185,9 +206,12 @@ function updateUsers() {
   );
 }
 
+// when the display connects via websockets, this event will be fired
 io.on("connection", function(socket) {
-  socket.emit("joke", jokes[jokes.length - 1]);
+  // send latest joke to display
+  // socket.emit("joke", jokes[jokes.length - 1]);
 
+  // when someone votes on the display, update the votes on the joke
   socket.on("vote", function(votedata) {
     joke = jokes.find(j => j.id === votedata.id);
     joke.votes[votedata.change]++;

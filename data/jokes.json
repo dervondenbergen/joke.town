@@ -1,1 +1,65 @@
-[{"id":"SM924c3df74830a06089a5d7ca0bccf00c","from":"+436767169319","user":"Lixi97","text":"Dhrjmfv","votes":{"up":16,"down":7}},{"id":"SMe146ec5d5b3206a11721ef89f471b247","from":"+436767169319","user":"Lixi97","text":"Treffen sich zwei Tomaten auf einer Straße.","votes":{"up":5,"down":1}},{"id":"SM543cbc6bf2d2ee79de9c6475815f1c11","from":"+436767169319","user":"Lixi97","text":"Eine 🥝 und eine 🌶 sitzen im MQ","votes":{"up":0,"down":0}},{"id":"SM67f254f97821df68e362f13bb4b6de31","from":"+436767169319","user":"🥝","text":"Melde mich später ","votes":{"up":12,"down":7}},{"id":"SM2145de9b1360f38f566e27c06841dd38","from":"+436767169319","user":"🥝","text":"Enfntkrmksic Memento fjfkkf","votes":{"up":6,"down":11}},{"id":"SM2145de9b1360f38f566e27c06841dd38","from":"+436767169319","user":"🥝","text":"Enfntkrmksic Memento fjfkkf","votes":{"up":0,"down":0}},{"id":"SM65658c5724a49cdcba81500b7f94c04b","from":"+436767169319","user":"🥝","text":"Jdjsje d","votes":{"up":36,"down":21}},{"id":"SM44883e961264bd4b73c9bacf0d026737","from":"+436767169319","user":"🥝","text":"Das wird jetzt ein ganz langer Witz werden damit die lange erreicht wird.","votes":{"up":12,"down":4}},{"id":"SM4c9298586d2f7fd9b22830d72067ad42","from":"+436767169319","user":"🥝","text":"🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅","votes":{"up":106,"down":73}}]
+[
+  {
+    "id": "SM924c3df74830a06089a5d7ca0bccf00c",
+    "from": "+436767169319",
+    "user": "Lixi97",
+    "text": "Dhrjmfv",
+    "votes": { "up": 16, "down": 7 }
+  },
+  {
+    "id": "SMe146ec5d5b3206a11721ef89f471b247",
+    "from": "+436767169319",
+    "user": "Lixi97",
+    "text": "Treffen sich zwei Tomaten auf einer Straße.",
+    "votes": { "up": 5, "down": 1 }
+  },
+  {
+    "id": "SM543cbc6bf2d2ee79de9c6475815f1c11",
+    "from": "+436767169319",
+    "user": "Lixi97",
+    "text": "Eine 🥝 und eine 🌶 sitzen im MQ",
+    "votes": { "up": 0, "down": 0 }
+  },
+  {
+    "id": "SM67f254f97821df68e362f13bb4b6de31",
+    "from": "+436767169319",
+    "user": "🥝",
+    "text": "Melde mich später ",
+    "votes": { "up": 12, "down": 7 }
+  },
+  {
+    "id": "SM2145de9b1360f38f566e27c06841dd38",
+    "from": "+436767169319",
+    "user": "🥝",
+    "text": "Enfntkrmksic Memento fjfkkf",
+    "votes": { "up": 6, "down": 11 }
+  },
+  {
+    "id": "SM2145de9b1360f38f566e27c06841dd38",
+    "from": "+436767169319",
+    "user": "🥝",
+    "text": "Enfntkrmksic Memento fjfkkf",
+    "votes": { "up": 0, "down": 0 }
+  },
+  {
+    "id": "SM65658c5724a49cdcba81500b7f94c04b",
+    "from": "+436767169319",
+    "user": "🥝",
+    "text": "Jdjsje d",
+    "votes": { "up": 36, "down": 21 }
+  },
+  {
+    "id": "SM44883e961264bd4b73c9bacf0d026737",
+    "from": "+436767169319",
+    "user": "🥝",
+    "text": "Das wird jetzt ein ganz langer Witz werden damit die lange erreicht wird.",
+    "votes": { "up": 12, "down": 4 }
+  },
+  {
+    "id": "SM4c9298586d2f7fd9b22830d72067ad42",
+    "from": "+436767169319",
+    "user": "🥝",
+    "text": "🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅",
+    "votes": { "up": 106, "down": 73 }
+  }
+]
