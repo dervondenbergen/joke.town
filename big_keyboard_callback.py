@@ -29,6 +29,7 @@ button2 = Button(23)
 
 
 def b1click():
+    # Function for when right button is pressed
     device.emit_click(KEY_MAPPING[1])
     currentDT = datetime.datetime.now()
     print("Button Right is pressed")
@@ -36,6 +37,7 @@ def b1click():
 
 
 def b2click():
+    # Function for when right button is pressed
     device.emit_click(KEY_MAPPING[0])
     currentDT = datetime.datetime.now()
     print("Button Left is pressed")
