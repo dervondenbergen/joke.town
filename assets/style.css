@@ -65,6 +65,12 @@ main.newjoke h2 {
 main.newjoke #text_field {
   margin: 2rem;
   font-size: 4rem;
+  max-height: 45rem;
+  overflow: hidden;
+}
+
+main.newjoke p {
+  margin-bottom: 2.5rem;
 }
 
 .votes {

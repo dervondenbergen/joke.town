@@ -1,4 +1,4 @@
-var currentjoke = {};
+var currentjoke = null;
 var socket = io(window.location.origin);
 
 socket.on("joke", function(joke) {
@@ -38,20 +38,34 @@ socket.on("jokevotes", function(joke) {
   }
 });
 
+function escapeOutput(toOutput) {
+  return toOutput
+    .replace(/\&/g, "&amp;")
+    .replace(/\</g, "&lt;")
+    .replace(/\>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/\'/g, "&#x27")
+    .replace(/\//g, "&#x2F");
+}
+
 function showJoke() {
   nojoke.classList.add("hidden");
   votes.classList.remove("hidden");
   newjoke.classList.remove("hidden");
   description.classList.remove("hidden");
 
+  user_field.innerHTML = escapeOutput(currentjoke.user);
+  text_field.innerHTML = escapeOutput(currentjoke.text)
+    .split("\n")
+    .filter(part => part.length > 0)
+    .map(part => `<p>${part}</p>`)
+    .join("");
+
   updateVoteBar();
 }
 
 function updateVoteBar() {
   totalvotes = currentjoke.votes.down + currentjoke.votes.up;
-
-  user_field.textContent = currentjoke.user;
-  text_field.textContent = currentjoke.text;
 
   upPercentage = Math.floor((currentjoke.votes.up / totalvotes) * 100);
 

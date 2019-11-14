@@ -209,7 +209,7 @@ function updateUsers() {
 // when the display connects via websockets, this event will be fired
 io.on("connection", function(socket) {
   // send latest joke to display
-  // socket.emit("joke", jokes[jokes.length - 1]);
+  socket.emit("joke", jokes[jokes.length - 1]);
 
   // when someone votes on the display, update the votes on the joke
   socket.on("vote", function(votedata) {
