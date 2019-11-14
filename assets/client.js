@@ -23,17 +23,20 @@ function keyboardVote(keyevent) {
     switch (keyevent.key) {
       case "ArrowLeft":
         socket.emit("vote", { id: currentjoke.id, change: "down" });
-        currentjoke.votes.down++;
-        showJoke();
         break;
       case "ArrowRight":
         socket.emit("vote", { id: currentjoke.id, change: "up" });
-        currentjoke.votes.up++;
-        showJoke();
         break;
     }
   }
 }
+
+socket.on("jokevotes", function(joke) {
+  if (joke.id === currentjoke.id) {
+    currentjoke.votes = joke.votes;
+    updateVoteBar();
+  }
+});
 
 function showJoke() {
   nojoke.classList.add("hidden");
@@ -41,6 +44,10 @@ function showJoke() {
   newjoke.classList.remove("hidden");
   description.classList.remove("hidden");
 
+  updateVoteBar();
+}
+
+function updateVoteBar() {
   totalvotes = currentjoke.votes.down + currentjoke.votes.up;
 
   user_field.textContent = currentjoke.user;

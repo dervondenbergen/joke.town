@@ -216,6 +216,8 @@ io.on("connection", function(socket) {
     joke = jokes.find(j => j.id === votedata.id);
     joke.votes[votedata.change]++;
 
+    io.emit("jokevotes", joke);
+
     updateJokes();
   });
 });
