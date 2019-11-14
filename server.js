@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const server = require("http").Server(app);
-const io = require("socket.io")(server);
+const sio = require("socket.io");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const path = require("path");
@@ -37,6 +37,7 @@ try {
 }
 
 server.listen(process.env.PORT);
+const io = sio.listen(process.env.IOPORT);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -45,8 +46,13 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + "/number.html");
 });
 
+screenpage = fs
+  .readFileSync(path.join(__dirname, "index.html"), {
+    encoding: "utf8"
+  })
+  .replace("{{IOPORT}}", process.env.IOPORT);
 app.get("/screen", function(req, res) {
-  res.sendFile(__dirname + "/index.html");
+  res.send(screenpage);
 });
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 

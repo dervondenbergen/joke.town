@@ -5,8 +5,8 @@
   "main": "server.js",
   "private": true,
   "scripts": {
-    "start": "PORT=1337 node server.js",
-    "dev": "PORT=1337 nodemon server.js -w server.js",
+    "start": "PORT=1337 IOPORT=1447 node server.js",
+    "dev": "PORT=1337 IOPORT=1447 nodemon server.js -w server.js",
     "remote": "lt -s iai-project -p 1337",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

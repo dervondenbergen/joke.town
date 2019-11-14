@@ -1,5 +1,7 @@
 var currentjoke = null;
-var socket = io(window.location.origin);
+const connectionTarget = new URL(window.location.origin);
+connectionTarget.port = IOPORT;
+var socket = io(connectionTarget.origin);
 
 socket.on("joke", function(joke) {
   currentjoke = joke;
