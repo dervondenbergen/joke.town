@@ -37,7 +37,7 @@ try {
 }
 
 server.listen(process.env.PORT);
-const io = sio.listen(process.env.IOPORT);
+const io = sio.listen(server);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
