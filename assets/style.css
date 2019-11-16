@@ -4,6 +4,8 @@
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 html,
@@ -38,8 +40,11 @@ header div {
   font-size: 3rem;
 }
 
-header .number {
+header .number,
+header .number a {
   font-weight: bold;
+  text-decoration: none !important;
+  color: black !important;
 }
 
 header .link {
