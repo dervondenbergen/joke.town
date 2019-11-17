@@ -46,13 +46,16 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + "/number.html");
 });
 
-screenpage = fs
-  .readFileSync(path.join(__dirname, "index.html"), {
-    encoding: "utf8"
-  })
-  .replace("{{IOPORT}}", process.env.IOPORT);
+// screenpage = fs
+//   .readFileSync(path.join(__dirname, "index.html"), {
+//     encoding: "utf8"
+//   })
+//   .replace("{{IOPORT}}", process.env.IOPORT);
+// app.get("/screen", function(req, res) {
+//   res.send(screenpage);
+// });
 app.get("/screen", function(req, res) {
-  res.send(screenpage);
+  res.sendFile(__dirname + "/index.html");
 });
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
