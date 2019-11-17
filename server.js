@@ -55,7 +55,7 @@ app.get("/", function(req, res) {
 //   res.send(screenpage);
 // });
 app.get("/screen", function(req, res) {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/screen.html");
 });
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
