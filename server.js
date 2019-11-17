@@ -45,6 +45,9 @@ app.use(bodyParser.json());
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/number.html");
 });
+app.get("/demo", function(req, res) {
+  res.sendFile(__dirname + "/demo.html");
+});
 
 // screenpage = fs
 //   .readFileSync(path.join(__dirname, "index.html"), {

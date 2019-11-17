@@ -1,0 +1,74 @@
+* {
+  font-family: sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  user-select: none;
+  overflow: hidden;
+}
+
+body,
+html {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 908px;
+  height: 1600px;
+  background-image: url("demo/screen.png");
+  background-repeat: no-repeat;
+  display: block;
+  transform: translate(-50%, -50%);
+
+  --border: 56;
+  --borderPx: calc(var(--border) * 1px);
+}
+
+iframe {
+  position: absolute;
+  top: var(--borderPx);
+  left: var(--borderPx);
+
+  --width: calc(908 - var(--border) * 2);
+  --scale: calc(var(--width) / 1050);
+
+  transform-origin: top left;
+  transform: scale(var(--scale));
+  pointer-events: none;
+
+  background: white;
+  touch-action: manipulation;
+}
+
+button {
+  height: 167px;
+  width: 373px;
+  position: absolute;
+  bottom: var(--borderPx);
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  touch-action: manipulation;
+}
+
+button.down {
+  left: var(--borderPx);
+  background-image: url("demo/down_passive.png");
+}
+button.down:active,
+.preload.down {
+  background-image: url("demo/down_active.png");
+}
+
+button.up {
+  right: var(--borderPx);
+  background-image: url("demo/up_passive.png");
+}
+button.up:active,
+.preload.up {
+  background-image: url("demo/up_active.png");
+}
