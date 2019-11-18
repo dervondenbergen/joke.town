@@ -1,15 +1,17 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 const server = require("http").Server(app);
+const https = require("https");
 const sio = require("socket.io");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const path = require("path");
 const Twilio = require("twilio");
-const twilio = Twilio(
-  "AC43c9074fd12241cd92186c182facc613",
-  "0e7be2402c4e6fa06cd529e3675c61ed"
-);
+const twilio = Twilio(process.env.TWILIO_SID, process.env.TWILIO_KEY, {
+  accountSid: process.env.TWILIO_ACCOUNT
+});
 
 timeoutId = null;
 jokequeue = [];
@@ -37,7 +39,19 @@ try {
 }
 
 server.listen(process.env.PORT);
-const io = sio.listen(server);
+
+if (process.env.NODE_ENV === "production") {
+  const httpsServer = https
+    .createServer({
+      key: process.env.HTTPS_KEY,
+      cert: process.env.HTTPS_CERT
+    })
+    .listen(process.env.IOPORT);
+
+  var io = sio.listen(httpsServer);
+} else {
+  var io = sio.listen(server);
+}
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -45,20 +59,22 @@ app.use(bodyParser.json());
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/number.html");
 });
+demopage = fs
+  .readFileSync(path.join(__dirname, "demo.html"), {
+    encoding: "utf8"
+  })
+  .replace("{{IOPORT}}", process.env.IOPORT);
 app.get("/demo", function(req, res) {
-  res.sendFile(__dirname + "/demo.html");
+  res.send(demopage);
 });
 
-// screenpage = fs
-//   .readFileSync(path.join(__dirname, "index.html"), {
-//     encoding: "utf8"
-//   })
-//   .replace("{{IOPORT}}", process.env.IOPORT);
-// app.get("/screen", function(req, res) {
-//   res.send(screenpage);
-// });
+screenpage = fs
+  .readFileSync(path.join(__dirname, "screen.html"), {
+    encoding: "utf8"
+  })
+  .replace("{{IOPORT}}", process.env.IOPORT);
 app.get("/screen", function(req, res) {
-  res.sendFile(__dirname + "/screen.html");
+  res.send(screenpage);
 });
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
@@ -69,6 +85,8 @@ app.post("/sms", function(req, res) {
 
   console.log(`SMS from ${from} saying: ${body}`);
 
+  const twiml = new MessagingResponse();
+
   // user is not in users object, gets asked for nickname
   if (!users.hasOwnProperty(from)) {
     console.log("no user");
@@ -77,7 +95,6 @@ app.post("/sms", function(req, res) {
 
     updateUsers();
 
-    const twiml = new MessagingResponse();
     twiml.message(
       "Um einen Witz einzureichen musst du dir einen Nickname zulegen 🤡"
     );
@@ -95,7 +112,6 @@ app.post("/sms", function(req, res) {
     users[from] = body;
     updateUsers();
 
-    const twiml = new MessagingResponse();
     twiml.message(`Hallo ${body}, ab jetzt kannst du Witze einsenden 📲`);
     res.writeHead(200, { "Content-Type": "text/xml" });
     return res.end(twiml.toString());
@@ -107,8 +123,8 @@ app.post("/sms", function(req, res) {
   // send joke into the system -> see sendJoke function
   sendJoke(j);
 
-  res.status(200);
-  res.end();
+  res.writeHead(200, { "Content-Type": "text/xml" });
+  res.end(twiml.toString());
 });
 
 function sendJoke(joke) {
@@ -153,7 +169,7 @@ function setResponseTimer(jokeid) {
   joke = jokes.find(j => j.id === jokeid);
 
   // joke gets sent to display via websockets
-  io.emit("joke", joke);
+  io.emit("joke", anonymiseJoke(joke));
 
   // writer will be informed, that joke appears for one minute on screen
   twilio.messages
@@ -218,17 +234,23 @@ function updateUsers() {
   );
 }
 
+function anonymiseJoke(joke) {
+  const jokecopy = Object.assign({}, joke);
+  delete jokecopy.from;
+  return jokecopy;
+}
+
 // when the display connects via websockets, this event will be fired
 io.on("connection", function(socket) {
   // send latest joke to display
-  socket.emit("joke", jokes[jokes.length - 1]);
+  socket.emit("joke", anonymiseJoke(jokes[jokes.length - 1]));
 
   // when someone votes on the display, update the votes on the joke
   socket.on("vote", function(votedata) {
     joke = jokes.find(j => j.id === votedata.id);
     joke.votes[votedata.change]++;
 
-    io.emit("jokevotes", joke);
+    io.emit("jokevotes", anonymiseJoke(joke));
 
     updateJokes();
   });
