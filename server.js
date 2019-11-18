@@ -43,8 +43,8 @@ server.listen(process.env.PORT);
 if (process.env.NODE_ENV === "production") {
   const httpsServer = https
     .createServer({
-      key: process.env.HTTPS_KEY,
-      cert: process.env.HTTPS_CERT
+      key: fs.readFileSync(process.env.HTTPS_KEY),
+      cert: fs.readFileSync(process.env.HTTPS_CERT)
     })
     .listen(process.env.IOPORT);
 
