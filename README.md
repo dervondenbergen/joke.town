@@ -23,13 +23,14 @@ events instead of checking the satate in a while loop
 
 [data/](data/): the _database_, where users.json and jokes.json gets saved
 
-[.env](.env.example): the configuration file which contains all settings (has to
+[.env](.example.env): the configuration file which contains all settings (has to
 be renamed to `.env`)
 
 ## services
 
-joke.town uses Twilio to communicate via SMS. Twilio can be tested for free with
-this, get \$10 free when using my refferal link:
+joke.town uses Twilio to communicate via SMS.
+
+Twilio can be tested for free, get credits worth \$10 with my refferal link:
 [www.twilio.com/referral/X8xo9b](www.twilio.com/referral/X8xo9b)
 
 the service is hosted on [Uberspace](https://uberspace.de/)
