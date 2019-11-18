@@ -34,7 +34,7 @@ function keyboardVote(keyevent) {
 }
 
 socket.on("jokevotes", function(joke) {
-  if (joke.id === currentjoke.id) {
+  if (currentjoke && currentjoke.id === joke.id) {
     currentjoke.votes = joke.votes;
     updateVoteBar();
   }
